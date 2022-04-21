@@ -75,11 +75,9 @@ function animate() {
     const { array, originalPosition, randomValues } = planeMesh.geometry.attributes.position;
     for (let i = 0; i < array.length; i += 3) {
         //x
-        array[i] = originalPosition[i] + Math.cos(frame + randomValues[i]) * 0.005;
+        array[i] = originalPosition[i] + Math.cos(frame + randomValues[i]) * 0.03;
         //y
-        array[i + 1] = originalPosition[i + 1] + Math.sin(frame + randomValues[i + 1]) * 0.005;
-        //z
-        array[i + 3] = originalPosition[i + 3] + Math.cos(frame + randomValues[i + 3]) * 0.005;
+        array[i + 1] = originalPosition[i + 1] + Math.sin(frame + randomValues[i + 1]) * 0.03;
     }
 
 
