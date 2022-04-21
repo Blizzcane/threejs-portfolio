@@ -18,19 +18,32 @@ document.body.appendChild(renderer.domElement); //inject canvas element
 new OrbitControls(camera, renderer.domElement);
 camera.position.z = 5 //move the box backwards so we can see the scene
 
-const planeGeometry = new THREE.PlaneGeometry(5, 5, 10, 10);
+const planeGeometry = new THREE.PlaneGeometry(24, 24, 25, 25);
 const planeMaterial = new THREE.MeshPhongMaterial({ side: THREE.DoubleSide, flatShading: THREE.FlatShading, vertexColors: true });
 const planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
 
 scene.add(planeMesh); //adds items to scene
 
+//vertice position randomization
 const { array } = planeMesh.geometry.attributes.position;
-for (let i = 0; i < array.length; i += 3) {
-    const x = array[i];
-    const y = array[i + 1];
-    const z = array[i + 2];
-    array[i + 2] = z + Math.random();
+const randomValues = [];
+for (let i = 0; i < array.length; i++) {
+    if (i % 3 == 0) {
+        const x = array[i];
+        const y = array[i + 1];
+        const z = array[i + 2];
+
+        array[i] = x + (Math.random() - 0.5);
+        array[i + 1] = y + (Math.random() - 0.5);
+        array[i + 2] = z + Math.random();
+    }
+
+
+    randomValues.push(Math.random());
 }
+
+planeMesh.geometry.attributes.position.randomValues = randomValues;
+planeMesh.geometry.attributes.position.originalPosition = planeMesh.geometry.attributes.position.array;
 
 const colors = [];
 for (let i = 0; i < planeMesh.geometry.attributes.position.count; i++) {
@@ -52,10 +65,21 @@ const mouse = {
     y: undefined
 }
 
+let frame = 0;
 function animate() {
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
     raycaster.setFromCamera(mouse, camera);
+    frame += 0.01
+    const { array, originalPosition, randomValues } = planeMesh.geometry.attributes.position;
+    for (let i = 0; i < array; i += 3) {
+        array[i] = originalPosition[i] + Math.cos(frame + randomValues[i]) * 0.01;
+    }
+
+
+
+    planeMesh.geometry.attributes.position.needsUpdate = true;
+
     const intersects = raycaster.intersectObject(planeMesh);
     if (intersects.length > 0) {
         const { color } = intersects[0].object.geometry.attributes;
