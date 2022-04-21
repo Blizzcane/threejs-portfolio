@@ -1,4 +1,5 @@
 import * as THREE from 'https://unpkg.com/three@0.139.2/build/three.module.js'
+import { OrbitControls } from 'https://unpkg.com/three@0.139.2/examples/jsm/controls/OrbitControls.js'
 
 //create a scene, camera, and renderer
 const scene = new THREE.Scene();
@@ -12,10 +13,11 @@ document.body.appendChild(renderer.domElement); //inject canvas element
 //need a geometry: data relating to all of the object's vertices that connects into a shape
 //need a material that fills in the wireframe of the geometry
 
+new OrbitControls(camera,renderer.domElement);
 camera.position.z = 5 //move the box backwards so we can see the scene
 
 const planeGeometry = new THREE.PlaneGeometry(5, 5, 10, 10);
-const planeMaterial = new THREE.MeshPhongMaterial({ color: 0xFF0000, side: THREE.DoubleSide, flatShading: THREE.FlatShading});
+const planeMaterial = new THREE.MeshPhongMaterial({ color: 0xFF0000, side: THREE.DoubleSide, flatShading: THREE.FlatShading });
 const planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
 
 scene.add(planeMesh); //adds items to scene
