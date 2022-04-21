@@ -45,6 +45,7 @@ for (let i = 0; i < array.length; i++) {
 planeMesh.geometry.attributes.position.randomValues = randomValues;
 planeMesh.geometry.attributes.position.originalPosition = planeMesh.geometry.attributes.position.array;
 
+
 const colors = [];
 for (let i = 0; i < planeMesh.geometry.attributes.position.count; i++) {
     colors.push(0, 0.19, 0.4);
@@ -70,10 +71,11 @@ function animate() {
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
     raycaster.setFromCamera(mouse, camera);
-    frame += 0.01
+    frame += 0.01;
     const { array, originalPosition, randomValues } = planeMesh.geometry.attributes.position;
-    for (let i = 0; i < array; i += 3) {
+    for (let i = 0; i < array.length; i += 3) {
         array[i] = originalPosition[i] + Math.cos(frame + randomValues[i]) * 0.01;
+        console.log(array[i])
     }
 
 
