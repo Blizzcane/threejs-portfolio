@@ -12,19 +12,29 @@ document.body.appendChild(renderer.domElement); //inject canvas element
 //need a geometry: data relating to all of the object's vertices that connects into a shape
 //need a material that fills in the wireframe of the geometry
 
-const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
-const material = new THREE.MeshBasicMaterial({ color: 0x00FF00 });
-const mesh = new THREE.Mesh(boxGeometry, material);
-
-scene.add(mesh); //adds items to scene
-
 camera.position.z = 5 //move the box backwards so we can see the scene
+
+const planeGeometry = new THREE.PlaneGeometry(5, 5, 10, 10);
+const planeMaterial = new THREE.MeshPhongMaterial({ color: 0xFF0000, side: THREE.DoubleSide, flatShading: THREE.FlatShading});
+const planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
+
+scene.add(planeMesh); //adds items to scene
+
+const { array } = planeMesh.geometry.attributes.position;
+for (let i = 0; i < array.length; i += 3) {
+    const x = array[i];
+    const y = array[i + 1];
+    const z = array[i + 2];
+    array[i + 2] = z + Math.random();
+}
+
+const light = new THREE.DirectionalLight(0xffffff, 1);
+light.position.set(0, 0, 1);
+scene.add(light);
 
 function animate() {
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
-    mesh.rotation.x += 0.01
-    mesh.rotation.y += 0.01
 }
 
 //renders scene
