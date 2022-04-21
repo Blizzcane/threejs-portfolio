@@ -16,9 +16,9 @@ document.body.appendChild(renderer.domElement); //inject canvas element
 //need a material that fills in the wireframe of the geometry
 
 new OrbitControls(camera, renderer.domElement);
-camera.position.z = 5 //move the box backwards so we can see the scene
+camera.position.z = 50 //move the box backwards so we can see the scene
 
-const planeGeometry = new THREE.PlaneGeometry(24, 24, 25, 25);
+const planeGeometry = new THREE.PlaneGeometry(400, 400, 50, 50);
 const planeMaterial = new THREE.MeshPhongMaterial({ side: THREE.DoubleSide, flatShading: THREE.FlatShading, vertexColors: true });
 const planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
 
@@ -33,13 +33,13 @@ for (let i = 0; i < array.length; i++) {
         const y = array[i + 1];
         const z = array[i + 2];
 
-        array[i] = x + (Math.random() - 0.5);
-        array[i + 1] = y + (Math.random() - 0.5);
-        array[i + 2] = z + Math.random();
+        array[i] = x + (Math.random() - 0.5) * 3;
+        array[i + 1] = y + (Math.random() - 0.5) * 3;
+        array[i + 2] = z + (Math.random() - 0.5) * 3;
     }
 
 
-    randomValues.push(Math.random());
+    randomValues.push(Math.random() - 0.5);
 }
 
 planeMesh.geometry.attributes.position.randomValues = randomValues;
@@ -54,7 +54,7 @@ for (let i = 0; i < planeMesh.geometry.attributes.position.count; i++) {
 planeMesh.geometry.setAttribute('color', new THREE.BufferAttribute(new Float32Array(colors), 3));
 
 const light = new THREE.DirectionalLight(0xffffff, 1);
-light.position.set(0, 0, 1);
+light.position.set(0, -1, 1);
 scene.add(light);
 
 const backLight = new THREE.DirectionalLight(0xffffff, 1);
@@ -74,8 +74,12 @@ function animate() {
     frame += 0.01;
     const { array, originalPosition, randomValues } = planeMesh.geometry.attributes.position;
     for (let i = 0; i < array.length; i += 3) {
-        array[i] = originalPosition[i] + Math.cos(frame + randomValues[i]) * 0.01;
-        console.log(array[i])
+        //x
+        array[i] = originalPosition[i] + Math.cos(frame + randomValues[i]) * 0.005;
+        //y
+        array[i + 1] = originalPosition[i + 1] + Math.sin(frame + randomValues[i + 1]) * 0.005;
+        //z
+        array[i + 3] = originalPosition[i + 3] + Math.cos(frame + randomValues[i + 3]) * 0.005;
     }
 
 
