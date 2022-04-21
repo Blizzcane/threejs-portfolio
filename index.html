@@ -7,21 +7,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>THREE JS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@1,500&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <style>
         body {
             margin: 0;
+            -webkit-font-smooting: antialiased
+        }
+
+        .font-exo {
+            font-family: 'Exo 2', sans-serif;
+        }
+
+        .font-space-mono {
+            font-family: 'Space Mono', monospace;
         }
     </style>
 </head>
 
-<body> 
-    <script type="importmap"  >
+<body>
+
+    <div id="app">
+        <div class="absolute text-white text-center" style="top: 50%; transform: translate(-50%, -50%); left: 50%;">
+            <h1 class="font-space-mono uppercase tracking-wide">Kishor Krishnan</h1>
+            <p class="font-exo text-4xl">ONE WITH AN EVERLASTING DESIRE FOR THE UNKNOWN & UNTOLD</p>
+            <button
+                class="border px-4 py-2 rounded-lg text-sm font-space-mono uppercase mt-8 hover:bg-white hover:text-gray-800">View
+                Work</button>
+        </div>
+    </div>
+    <script type="importmap">
         { "imports": {
           "three":        "https://unpkg.com/three@0.139.2/build/three.module.js",
           "orbit": "https://unpkg.com/three@0.139.2/examples/jsm/controls/OrbitControls.js",
           "gsap": "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.3/gsap.min.js"
         } }</script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.3/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.3/gsap.min.js"></script>
     <script type="module" src="./index.js"></script>
 </body>
 
